@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import express from 'express';
+import 'express-async-errors';
 import cors from 'cors';
 
 import routes from './routes';
@@ -12,5 +13,6 @@ app.use(cors);
 app.use(routes);
 
 app.listen(3434, () => {
+  // eslint-disable-next-line no-console
   console.log('[SERVER] Running on: http://localhost:3434');
 });
