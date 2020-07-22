@@ -5,13 +5,14 @@ import 'express-async-errors';
 import cors from 'cors';
 
 import '@shared/infra/typeorm';
+import '@shared/containers';
 
 import routes from './routes';
 
 const app = express();
 
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 app.use(routes);
 
 app.listen(3434, () => {
