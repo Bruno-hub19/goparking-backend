@@ -12,6 +12,30 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
+  public async findById(user_id: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { id: user_id },
+    });
+
+    return user;
+  }
+
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { email },
+    });
+
+    return user;
+  }
+
+  public async findByPhone(phone: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { phone },
+    });
+
+    return user;
+  }
+
   public async create({
     name,
     email,
@@ -28,6 +52,10 @@ class UsersRepository implements IUsersRepository {
     await this.ormRepository.save(user);
 
     return user;
+  }
+
+  public async save(user: User): Promise<User> {
+    return this.ormRepository.save(user);
   }
 }
 
