@@ -3,7 +3,9 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IHashProvider from '@shared/containers/providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   email: string;
@@ -20,6 +22,9 @@ class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) { } // eslint-disable-line
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -29,7 +34,12 @@ class AuthenticateUserService {
       throw new AppError('This user does not exists');
     }
 
-    if (user.password !== password) {
+    const compareHashedPassword = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
+
+    if (!compareHashedPassword) {
       throw new AppError('Incorrect phone/password combination');
     }
 
