@@ -1,6 +1,8 @@
 import { injectable, inject } from 'tsyringe';
+import { sign } from 'jsonwebtoken';
 
 import AppError from '@shared/errors/AppError';
+import authConfig from '@configs/auth';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
@@ -43,8 +45,13 @@ class AuthenticateUserService {
       throw new AppError('Incorrect phone/password combination');
     }
 
+    const token = sign({}, authConfig.jwt.secret, {
+      subject: user.id,
+      expiresIn: authConfig.jwt.expiresIn,
+    });
+
     return {
-      token: 'jwt-token',
+      token,
       user,
     };
   }
