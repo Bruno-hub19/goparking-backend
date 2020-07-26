@@ -33,7 +33,7 @@ class AuthenticateUserService {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError('This user does not exists');
+      throw new AppError('Incorrect phone/password combination');
     }
 
     const compareHashedPassword = await this.hashProvider.compareHash(
