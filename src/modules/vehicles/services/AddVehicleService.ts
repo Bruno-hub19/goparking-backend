@@ -32,15 +32,11 @@ class AddVehicleService {
       throw new AppError('This user does not exists');
     }
 
-    const findVehicleByOwner = await this.vehiclesRepository.findAllByOwner(
-      owner_id,
-    );
-
     const findVehicleByLicensePlate = await this.vehiclesRepository.findOneByLicensePlate(
       license_plate,
     );
 
-    if (findVehicleByOwner || findVehicleByLicensePlate) {
+    if (findVehicleByLicensePlate) {
       throw new AppError('This vehicle is already registered');
     }
 

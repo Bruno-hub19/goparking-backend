@@ -27,16 +27,16 @@ class RemoveVehicleService {
       throw new AppError('This user does not exists');
     }
 
-    const findVehicleByOwner = await this.vehiclesRepository.findAllByOwner(
-      owner_id,
-    );
-
-    const findVehicleByLicensePlate = await this.vehiclesRepository.findOneByLicensePlate(
+    const findVehicle = await this.vehiclesRepository.findOneByLicensePlate(
       license_plate,
     );
 
-    if (!findVehicleByOwner || !findVehicleByLicensePlate) {
+    if (!findVehicle) {
       throw new AppError('Vehicle not found');
+    }
+
+    if (findVehicle.owner_id !== owner_id) {
+      throw new AppError('Operation not permitted', 401);
     }
 
     await this.vehiclesRepository.remove({ license_plate, owner_id });
