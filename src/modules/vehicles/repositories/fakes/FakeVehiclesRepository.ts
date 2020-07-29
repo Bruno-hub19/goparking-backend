@@ -6,15 +6,17 @@ import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
 class FakeVehiclesRepository implements IVehiclesRepository {
   private vehicles: Vehicle[] = [];
 
-  public async findByOwner(owner_id: string): Promise<Vehicle | undefined> {
-    const vehicle = this.vehicles.find(
+  public async findAllByOwner(
+    owner_id: string,
+  ): Promise<Vehicle[] | undefined> {
+    const vehicle = this.vehicles.filter(
       eachVehicle => eachVehicle.owner_id === owner_id,
     );
 
     return vehicle;
   }
 
-  public async findByLicensePlate(
+  public async findOneByLicensePlate(
     license_plate: string,
   ): Promise<Vehicle | undefined> {
     const vehicle = this.vehicles.find(

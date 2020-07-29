@@ -12,15 +12,17 @@ class VehiclesRepository implements IVehiclesRepository {
     this.ormRepository = getRepository(Vehicle);
   }
 
-  public async findByOwner(owner_id: string): Promise<Vehicle | undefined> {
-    const vehicle = await this.ormRepository.findOne({
+  public async findAllByOwner(
+    owner_id: string,
+  ): Promise<Vehicle[] | undefined> {
+    const vehicle = await this.ormRepository.find({
       where: { owner_id },
     });
 
     return vehicle;
   }
 
-  public async findByLicensePlate(
+  public async findOneByLicensePlate(
     license_plate: string,
   ): Promise<Vehicle | undefined> {
     const vehicle = await this.ormRepository.findOne({
