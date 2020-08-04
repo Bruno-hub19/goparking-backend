@@ -4,23 +4,31 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
 
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
-  @Column()
+  @Column({ unique: true, nullable: false })
   email: string;
 
-  @Column()
+  @Column({ unique: true, nullable: false })
   phone: string;
 
-  @Column()
+  @OneToMany(() => Vehicle, users_vehicles => users_vehicles.user, {
+    eager: true,
+  })
+  vehicles: Vehicle[];
+
+  @Column({ nullable: false })
   password: string;
 
   @CreateDateColumn()

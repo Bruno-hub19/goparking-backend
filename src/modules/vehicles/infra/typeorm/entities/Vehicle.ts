@@ -15,13 +15,13 @@ class Vehicle {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true, nullable: false })
   license_plate: string;
 
-  @Column()
+  @Column({ nullable: false })
   owner_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, users => users.vehicles)
   @JoinColumn({ name: 'owner_id' })
   user: User;
 
