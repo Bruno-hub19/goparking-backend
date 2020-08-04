@@ -8,6 +8,9 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesRepository';
 import VehiclesRepository from '@modules/vehicles/infra/typeorm/repositories/VehiclesRepository';
 
+import { ParkingRepository } from '@modules/parking/infra/typeorm/repositories/ParkingRepository';
+import { IParkingRepository } from '@modules/parking/repositories/IParkingRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -16,4 +19,9 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IVehiclesRepository>(
   'VehiclesRepository',
   VehiclesRepository,
+);
+
+container.registerSingleton<IParkingRepository>(
+  'ParkingRepository',
+  ParkingRepository,
 );
