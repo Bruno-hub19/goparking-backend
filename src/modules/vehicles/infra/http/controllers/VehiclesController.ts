@@ -18,11 +18,12 @@ class VehiclesController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
-    const { license_plate } = request.body;
+    const { name, license_plate } = request.body;
 
     const addVehicleService = container.resolve(AddVehicleService);
 
     const vehicle = await addVehicleService.execute({
+      name,
       license_plate,
       owner_id: user_id,
     });
@@ -32,11 +33,12 @@ class VehiclesController {
 
   public async delete(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
-    const { license_plate } = request.body;
+    const { name, license_plate } = request.body;
 
     const removeVehicleService = container.resolve(RemoveVehicleService);
 
     await removeVehicleService.execute({
+      name,
       license_plate,
       owner_id: user_id,
     });

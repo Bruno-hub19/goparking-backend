@@ -30,6 +30,7 @@ describe('AddVehicle', () => {
     });
 
     const vehicle = await addVehicleService.execute({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user.id,
     });
@@ -45,6 +46,7 @@ describe('AddVehicle', () => {
   it('should not be able to add a new vehicle by pass a non-existing owner_id', async () => {
     await expect(
       addVehicleService.execute({
+        name: 'vehicle1',
         license_plate: 'aaaa9999',
         owner_id: 'any-owner-id',
       }),
@@ -60,6 +62,7 @@ describe('AddVehicle', () => {
     });
 
     await addVehicleService.execute({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user1.id,
     });
@@ -73,6 +76,7 @@ describe('AddVehicle', () => {
 
     await expect(
       addVehicleService.execute({
+        name: 'vehicle1',
         license_plate: 'aaaa9999',
         owner_id: user1.id,
       }),
@@ -80,6 +84,7 @@ describe('AddVehicle', () => {
 
     await expect(
       addVehicleService.execute({
+        name: 'vehicle1',
         license_plate: 'aaaa9999',
         owner_id: user2.id,
       }),

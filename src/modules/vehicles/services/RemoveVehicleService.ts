@@ -6,6 +6,7 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesRepository';
 
 interface IRequest {
+  name: string;
   license_plate: string;
   owner_id: string;
 }
@@ -20,7 +21,11 @@ class RemoveVehicleService {
     private usersRepository: IUsersRepository,
   ) { } // eslint-disable-line
 
-  public async execute({ license_plate, owner_id }: IRequest): Promise<void> {
+  public async execute({
+    name,
+    license_plate,
+    owner_id,
+  }: IRequest): Promise<void> {
     const findOwner = await this.usersRepository.findById(owner_id);
 
     if (!findOwner) {
@@ -39,7 +44,7 @@ class RemoveVehicleService {
       throw new AppError('Operation not permitted', 401);
     }
 
-    await this.vehiclesRepository.remove({ license_plate, owner_id });
+    await this.vehiclesRepository.remove({ name, license_plate, owner_id });
   }
 }
 

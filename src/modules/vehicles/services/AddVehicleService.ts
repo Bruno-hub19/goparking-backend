@@ -8,6 +8,7 @@ import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesReposit
 import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
 
 interface IRequest {
+  name: string;
   license_plate: string;
   owner_id: string;
 }
@@ -23,6 +24,7 @@ class AddVehicleService {
   ) { } // eslint-disable-line
 
   public async execute({
+    name,
     license_plate,
     owner_id,
   }: IRequest): Promise<Vehicle> {
@@ -41,6 +43,7 @@ class AddVehicleService {
     }
 
     const vehicle = await this.vehiclesRepository.add({
+      name,
       license_plate,
       owner_id,
     });

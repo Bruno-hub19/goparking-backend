@@ -27,12 +27,14 @@ class FakeVehiclesRepository implements IVehiclesRepository {
   }
 
   public async add({
+    name,
     license_plate,
     owner_id,
   }: IAddAndRemoveVehicleDTO): Promise<Vehicle> {
     const vehicle = new Vehicle();
 
     Object.assign(vehicle, {
+      name,
       license_plate,
       owner_id,
     });
@@ -43,13 +45,15 @@ class FakeVehiclesRepository implements IVehiclesRepository {
   }
 
   public async remove({
+    name,
     license_plate,
     owner_id,
   }: IAddAndRemoveVehicleDTO): Promise<void> {
     const vehicleIndex = this.vehicles.findIndex(
       eachVehicle =>
         eachVehicle.license_plate === license_plate &&
-        eachVehicle.owner_id === owner_id,
+        eachVehicle.owner_id === owner_id &&
+        eachVehicle.name === name,
     );
 
     this.vehicles.splice(vehicleIndex, 1);

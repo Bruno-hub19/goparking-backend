@@ -30,16 +30,19 @@ describe('ListVehicles', () => {
     });
 
     const vehicle1 = await fakeVehiclesRepository.add({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user.id,
     });
 
     const vehicle2 = await fakeVehiclesRepository.add({
+      name: 'vehicle1',
       license_plate: 'bbbb9999',
       owner_id: user.id,
     });
 
     const vehicle3 = await fakeVehiclesRepository.add({
+      name: 'vehicle1',
       license_plate: 'cccc9999',
       owner_id: user.id,
     });

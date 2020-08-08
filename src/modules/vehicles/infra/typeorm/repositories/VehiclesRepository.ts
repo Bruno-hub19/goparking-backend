@@ -33,10 +33,12 @@ class VehiclesRepository implements IVehiclesRepository {
   }
 
   public async add({
+    name,
     license_plate,
     owner_id,
   }: IAddAndRemoveVehicleDTO): Promise<Vehicle> {
     const vehicle = this.ormRepository.create({
+      name,
       license_plate,
       owner_id,
     });
@@ -47,10 +49,11 @@ class VehiclesRepository implements IVehiclesRepository {
   }
 
   public async remove({
+    name,
     license_plate,
     owner_id,
   }: IAddAndRemoveVehicleDTO): Promise<void> {
-    await this.ormRepository.delete({ license_plate, owner_id });
+    await this.ormRepository.delete({ name, license_plate, owner_id });
   }
 }
 

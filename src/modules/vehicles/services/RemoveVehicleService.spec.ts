@@ -32,16 +32,19 @@ describe('RemoveVehicle', () => {
     });
 
     await fakeVehiclesRepository.add({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user.id,
     });
 
     await removeVehicleService.execute({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user.id,
     });
 
     expect(removeVehicle).toHaveBeenCalledWith({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user.id,
     });
@@ -57,6 +60,7 @@ describe('RemoveVehicle', () => {
 
     await expect(
       removeVehicleService.execute({
+        name: 'vehicle1',
         license_plate: 'aaaa0000',
         owner_id: user.id,
       }),
@@ -72,6 +76,7 @@ describe('RemoveVehicle', () => {
     });
 
     await fakeVehiclesRepository.add({
+      name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user1.id,
     });
@@ -85,6 +90,7 @@ describe('RemoveVehicle', () => {
 
     await expect(
       removeVehicleService.execute({
+        name: 'vehicle1',
         license_plate: 'aaaa9999',
         owner_id: user2.id,
       }),
@@ -94,6 +100,7 @@ describe('RemoveVehicle', () => {
   it('should not be able to remove a vehicle from an user that does not exist', async () => {
     await expect(
       removeVehicleService.execute({
+        name: 'vehicle1',
         license_plate: 'aaaa0000',
         owner_id: 'non-existing-user-id',
       }),
