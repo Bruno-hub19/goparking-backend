@@ -15,6 +15,9 @@ class Vehicle {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ nullable: false })
+  name: string;
+
   @Column({ unique: true, nullable: false })
   license_plate: string;
 
