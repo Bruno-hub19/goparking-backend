@@ -22,7 +22,7 @@ describe('RemoveVehicle', () => {
   });
 
   it('should be able to remove a vehicle', async () => {
-    const removeVehicle = jest.spyOn(fakeVehiclesRepository, 'remove');
+    const removeVehicle = jest.spyOn(removeVehicleService, 'execute');
 
     const user = await fakeUsersRepository.create({
       name: 'Linus',
@@ -31,22 +31,20 @@ describe('RemoveVehicle', () => {
       password: 'torvalds123',
     });
 
-    await fakeVehiclesRepository.add({
-      name: 'vehicle1',
+    const vehicle = await fakeVehiclesRepository.add({
+      name: 'Porsche',
       license_plate: 'aaaa9999',
       owner_id: user.id,
     });
 
     await removeVehicleService.execute({
-      name: 'vehicle1',
-      license_plate: 'aaaa9999',
       owner_id: user.id,
+      vehicle_id: vehicle.id,
     });
 
     expect(removeVehicle).toHaveBeenCalledWith({
-      name: 'vehicle1',
-      license_plate: 'aaaa9999',
       owner_id: user.id,
+      vehicle_id: vehicle.id,
     });
   });
 
@@ -60,9 +58,8 @@ describe('RemoveVehicle', () => {
 
     await expect(
       removeVehicleService.execute({
-        name: 'vehicle1',
-        license_plate: 'aaaa0000',
         owner_id: user.id,
+        vehicle_id: 'non-existing-vehicle-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -75,7 +72,7 @@ describe('RemoveVehicle', () => {
       password: 'torvalds123',
     });
 
-    await fakeVehiclesRepository.add({
+    const vehicleOfUser1 = await fakeVehiclesRepository.add({
       name: 'vehicle1',
       license_plate: 'aaaa9999',
       owner_id: user1.id,
@@ -90,9 +87,8 @@ describe('RemoveVehicle', () => {
 
     await expect(
       removeVehicleService.execute({
-        name: 'vehicle1',
-        license_plate: 'aaaa9999',
         owner_id: user2.id,
+        vehicle_id: vehicleOfUser1.id,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -100,9 +96,8 @@ describe('RemoveVehicle', () => {
   it('should not be able to remove a vehicle from an user that does not exist', async () => {
     await expect(
       removeVehicleService.execute({
-        name: 'vehicle1',
-        license_plate: 'aaaa0000',
         owner_id: 'non-existing-user-id',
+        vehicle_id: 'non-existing-vehicle-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

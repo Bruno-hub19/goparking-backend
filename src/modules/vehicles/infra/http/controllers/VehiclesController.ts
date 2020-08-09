@@ -33,14 +33,13 @@ class VehiclesController {
 
   public async delete(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
-    const { name, license_plate } = request.body;
+    const { id } = request.params;
 
     const removeVehicleService = container.resolve(RemoveVehicleService);
 
     await removeVehicleService.execute({
-      name,
-      license_plate,
       owner_id: user_id,
+      vehicle_id: id,
     });
 
     return response.status(204).json();

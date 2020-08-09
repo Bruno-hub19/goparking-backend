@@ -11,6 +11,6 @@ vehiclesRoutes.use(ensureAuthenticate);
 
 vehiclesRoutes.get('/', vehiclesController.index);
 vehiclesRoutes.post('/add', vehiclesController.create);
-vehiclesRoutes.delete('/delete', vehiclesController.delete);
+vehiclesRoutes.delete('/delete/:id', vehiclesController.delete);
 
 export default vehiclesRoutes;

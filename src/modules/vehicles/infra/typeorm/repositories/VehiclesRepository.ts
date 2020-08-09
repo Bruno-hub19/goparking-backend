@@ -1,7 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesRepository';
-import IAddAndRemoveVehicleDTO from '@modules/vehicles/dtos/IAddAndRemoveVehicleDTO';
+import ICreateVehicleDTO from '@modules/vehicles/dtos/ICreateVehicleDTO';
 
 import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
 
@@ -10,6 +10,14 @@ class VehiclesRepository implements IVehiclesRepository {
 
   constructor() {
     this.ormRepository = getRepository(Vehicle);
+  }
+
+  public async findOneById(vehicle_id: string): Promise<Vehicle | undefined> {
+    const vehicle = await this.ormRepository.findOne({
+      where: { id: vehicle_id },
+    });
+
+    return vehicle;
   }
 
   public async findAllByOwner(
@@ -36,7 +44,7 @@ class VehiclesRepository implements IVehiclesRepository {
     name,
     license_plate,
     owner_id,
-  }: IAddAndRemoveVehicleDTO): Promise<Vehicle> {
+  }: ICreateVehicleDTO): Promise<Vehicle> {
     const vehicle = this.ormRepository.create({
       name,
       license_plate,
@@ -48,12 +56,8 @@ class VehiclesRepository implements IVehiclesRepository {
     return vehicle;
   }
 
-  public async remove({
-    name,
-    license_plate,
-    owner_id,
-  }: IAddAndRemoveVehicleDTO): Promise<void> {
-    await this.ormRepository.delete({ name, license_plate, owner_id });
+  public async remove(vehicle_id: string): Promise<void> {
+    await this.ormRepository.delete({ id: vehicle_id });
   }
 }
 

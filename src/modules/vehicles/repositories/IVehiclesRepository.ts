@@ -1,10 +1,11 @@
 import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
 
-import IAddAndRemoveVehicleDTO from '@modules/vehicles/dtos/IAddAndRemoveVehicleDTO';
+import ICreateVehicleDTO from '@modules/vehicles/dtos/ICreateVehicleDTO';
 
 export default interface IVehiclesRepository {
-  add(data: IAddAndRemoveVehicleDTO): Promise<Vehicle>;
-  remove(data: IAddAndRemoveVehicleDTO): Promise<void>;
+  add(data: ICreateVehicleDTO): Promise<Vehicle>;
+  remove(vehicle_id: string): Promise<void>;
+  findOneById(vehicle_id: string): Promise<Vehicle | undefined>;
   findAllByOwner(owner_id: string): Promise<Vehicle[] | undefined>;
   findOneByLicensePlate(license_plate: string): Promise<Vehicle | undefined>;
 }

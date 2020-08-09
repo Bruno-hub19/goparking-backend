@@ -1,10 +1,18 @@
 import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesRepository';
-import IAddAndRemoveVehicleDTO from '@modules/vehicles/dtos/IAddAndRemoveVehicleDTO';
+import ICreateVehicleDTO from '@modules/vehicles/dtos/ICreateVehicleDTO';
 
 import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
 
 class FakeVehiclesRepository implements IVehiclesRepository {
   private vehicles: Vehicle[] = [];
+
+  public async findOneById(vehicle_id: string): Promise<Vehicle | undefined> {
+    const vehicle = this.vehicles.find(
+      eachVehicle => eachVehicle.id === vehicle_id,
+    );
+
+    return vehicle;
+  }
 
   public async findAllByOwner(
     owner_id: string,
@@ -30,7 +38,7 @@ class FakeVehiclesRepository implements IVehiclesRepository {
     name,
     license_plate,
     owner_id,
-  }: IAddAndRemoveVehicleDTO): Promise<Vehicle> {
+  }: ICreateVehicleDTO): Promise<Vehicle> {
     const vehicle = new Vehicle();
 
     Object.assign(vehicle, {
@@ -44,16 +52,9 @@ class FakeVehiclesRepository implements IVehiclesRepository {
     return vehicle;
   }
 
-  public async remove({
-    name,
-    license_plate,
-    owner_id,
-  }: IAddAndRemoveVehicleDTO): Promise<void> {
+  public async remove(vehicle_id: string): Promise<void> {
     const vehicleIndex = this.vehicles.findIndex(
-      eachVehicle =>
-        eachVehicle.license_plate === license_plate &&
-        eachVehicle.owner_id === owner_id &&
-        eachVehicle.name === name,
+      eachVehicle => eachVehicle.id === vehicle_id,
     );
 
     this.vehicles.splice(vehicleIndex, 1);
