@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import { Park } from '@modules/park/infra/typeorm/entities/Park';
 
 @Entity('users_vehicles')
 class Vehicle {
@@ -27,6 +29,9 @@ class Vehicle {
   @ManyToOne(() => User, users => users.vehicles)
   @JoinColumn({ name: 'owner_id' })
   user: User;
+
+  @OneToMany(() => Park, park => park.vehicle)
+  park: Park[];
 
   @CreateDateColumn()
   created_at: Date;

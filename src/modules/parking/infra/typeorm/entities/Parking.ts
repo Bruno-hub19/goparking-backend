@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Park } from '@modules/park/infra/typeorm/entities/Park';
 
 @Entity('parking_lot')
 class Parking {
@@ -25,6 +27,9 @@ class Parking {
 
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   five_minuts_price: number;
+
+  @OneToMany(() => Park, park => park.parking)
+  park: Park[];
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,3 +1,5 @@
+import { uuid } from 'uuidv4';
+
 import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesRepository';
 import ICreateVehicleDTO from '@modules/vehicles/dtos/ICreateVehicleDTO';
 
@@ -42,6 +44,7 @@ class FakeVehiclesRepository implements IVehiclesRepository {
     const vehicle = new Vehicle();
 
     Object.assign(vehicle, {
+      id: uuid(),
       name,
       license_plate,
       owner_id,

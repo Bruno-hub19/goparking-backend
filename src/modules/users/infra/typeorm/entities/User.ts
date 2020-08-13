@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import Vehicle from '@modules/vehicles/infra/typeorm/entities/Vehicle';
+import { Park } from '@modules/park/infra/typeorm/entities/Park';
 
 @Entity('users')
 class User {
@@ -27,6 +28,9 @@ class User {
     eager: true,
   })
   vehicles: Vehicle[];
+
+  @OneToMany(() => Park, park => park.user)
+  park: Park[];
 
   @Column({ nullable: false })
   password: string;

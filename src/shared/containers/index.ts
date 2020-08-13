@@ -8,8 +8,11 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IVehiclesRepository from '@modules/vehicles/repositories/IVehiclesRepository';
 import VehiclesRepository from '@modules/vehicles/infra/typeorm/repositories/VehiclesRepository';
 
-import { ParkingRepository } from '@modules/parking/infra/typeorm/repositories/ParkingRepository';
 import { IParkingRepository } from '@modules/parking/repositories/IParkingRepository';
+import { ParkingRepository } from '@modules/parking/infra/typeorm/repositories/ParkingRepository';
+
+import { IParkRepository } from '@modules/park/repositories/IParkRepository';
+import { ParkRepository } from '@modules/park/infra/typeorm/repositories/ParkRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -25,3 +28,5 @@ container.registerSingleton<IParkingRepository>(
   'ParkingRepository',
   ParkingRepository,
 );
+
+container.registerSingleton<IParkRepository>('ParkRepository', ParkRepository);
