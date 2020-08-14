@@ -20,7 +20,7 @@ class Park {
   @Column({ nullable: false })
   user_id: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   vehicle_id: string;
 
   @Column({ nullable: false })
@@ -30,7 +30,9 @@ class Park {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Vehicle, users_vehicles => users_vehicles.park)
+  @ManyToOne(() => Vehicle, users_vehicles => users_vehicles.park, {
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'vehicle_id' })
   vehicle: Vehicle;
 
